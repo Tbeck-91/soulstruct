@@ -3,13 +3,13 @@ from __future__ import annotations
 import re
 from typing import TYPE_CHECKING
 
-from soulstruct.project.editor import SoulstructBaseEditor
+from soulstruct.project.base.core import BaseDataTab
 
 if TYPE_CHECKING:
     from soulstruct.text import DarkSoulsText
 
 
-class SoulstructTextEditor(SoulstructBaseEditor):
+class TextDataTab(BaseDataTab):
     DATA_NAME = "Text"
     TAB_NAME = "text"
     CATEGORY_BOX_WIDTH = 165
@@ -18,7 +18,7 @@ class SoulstructTextEditor(SoulstructBaseEditor):
     ENTRY_BOX_HEIGHT = 400
     ENTRY_RANGE_SIZE = 100
 
-    class EntryRow(SoulstructBaseEditor.EntryRow):
+    class EntryRow(BaseDataTab.EntryRow):
         _MATCH_ITEM = re.compile(r'^(Weapon|Armor|Ring|Good|Spell)(Names|Summaries|Descriptions)$')
 
         def build_entry_context_menu(self):

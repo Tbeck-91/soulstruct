@@ -12,8 +12,8 @@ from soulstruct.utilities import word_wrap
 from soulstruct.utilities.window import SmartFrame
 
 from .core import SoulstructProject
-from .ai import SoulstructAIEditor
-from .entities import SoulstructEntityEditor
+from .ai import AIDataTab
+from .entities import EntityDataTab
 from .events import SoulstructEventEditor
 from .icon import SOULSTRUCT_ICON
 from .lighting import SoulstructLightingEditor
@@ -21,8 +21,8 @@ from .links import WindowLinker
 from .maps import SoulstructMapEditor
 from .params import SoulstructParamsEditor
 from .runtime import SoulstructRuntimeManager
-from .talk import SoulstructTalkEditor
-from .text import SoulstructTextEditor
+from .talk import TalkDataTab
+from .text import TextDataTab
 from .utilities import SoulstructProjectError, data_type_caps, RestoreBackupError, DATA_TYPES
 
 _LOGGER = logging.getLogger(__name__)
@@ -30,13 +30,13 @@ _LOGGER = logging.getLogger(__name__)
 
 class SoulstructProjectWindow(SmartFrame):
     maps_tab: Optional[SoulstructMapEditor]
-    entities_tab: Optional[SoulstructEntityEditor]
+    entities_tab: Optional[EntityDataTab]
     params_tab: Optional[SoulstructParamsEditor]
     lighting_tab: Optional[SoulstructLightingEditor]
-    text_tab: Optional[SoulstructTextEditor]
+    text_tab: Optional[TextDataTab]
     events_tab: Optional[SoulstructEventEditor]
-    ai_tab: Optional[SoulstructAIEditor]
-    talk_tab: Optional[SoulstructTalkEditor]
+    ai_tab: Optional[AIDataTab]
+    talk_tab: Optional[TalkDataTab]
 
     TAB_ORDER = ['maps', 'entities', 'params', 'lighting', 'text', 'events', 'ai', 'talk', 'runtime']
 
@@ -141,7 +141,7 @@ class SoulstructProjectWindow(SmartFrame):
         self.maps_tab.bind("<Visibility>", self._update_banner)
 
         self.entities_tab = self.SmartFrame(
-            frame=tab_frames['entities'], smart_frame_class=SoulstructEntityEditor,
+            frame=tab_frames['entities'], smart_frame_class=EntityDataTab,
             maps=self.project.Maps, evs_directory=self.project.project_root / "events",
             global_map_choice_func=self.set_global_map_choice,
             linker=self.linker, sticky='nsew')
@@ -158,7 +158,7 @@ class SoulstructProjectWindow(SmartFrame):
         self.lighting_tab.bind("<Visibility>", self._update_banner)
 
         self.text_tab = self.SmartFrame(
-            frame=tab_frames['text'], smart_frame_class=SoulstructTextEditor,
+            frame=tab_frames['text'], smart_frame_class=TextDataTab,
             text=self.project.Text, linker=self.linker, sticky='nsew')
         self.text_tab.bind("<Visibility>", self._update_banner)
 
@@ -170,7 +170,7 @@ class SoulstructProjectWindow(SmartFrame):
         self.events_tab.bind("<Visibility>", self._update_banner)
 
         self.ai_tab = self.SmartFrame(
-            frame=tab_frames['ai'], smart_frame_class=SoulstructAIEditor,
+            frame=tab_frames['ai'], smart_frame_class=AIDataTab,
             ai=self.project.AI, script_directory=self.project.project_root / "ai_scripts",
             game_root=self.project.game_root, allow_decompile=self.project.game_name == "Dark Souls Remastered",
             global_map_choice_func=self.set_global_map_choice,
@@ -178,7 +178,7 @@ class SoulstructProjectWindow(SmartFrame):
         self.ai_tab.bind("<Visibility>", self._update_banner)
 
         self.talk_tab = self.SmartFrame(
-            frame=tab_frames['talk'], smart_frame_class=SoulstructTalkEditor,
+            frame=tab_frames['talk'], smart_frame_class=TalkDataTab,
             esp_directory=self.project.project_root / "talk", game_root=self.project.game_root,
             game_name=self.project.game_name,
             global_map_choice_func=self.set_global_map_choice,

@@ -3,13 +3,14 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from soulstruct.params.enums import ITEMLOT_ITEMCATEGORY
-from soulstruct.project.editor import SoulstructBaseFieldEditor, NameSelectionBox
+from soulstruct.project.base.core import BaseFieldDataTab
+from soulstruct.project.utilities import NameSelectionBox
 
 if TYPE_CHECKING:
     from soulstruct.params import DarkSoulsGameParameters, ParamEntry
 
 
-class SoulstructParamsEditor(SoulstructBaseFieldEditor):
+class SoulstructParamsEditor(BaseFieldDataTab):
     DATA_NAME = "Params"
     TAB_NAME = "params"
     CATEGORY_BOX_WIDTH = 165
@@ -18,11 +19,11 @@ class SoulstructParamsEditor(SoulstructBaseFieldEditor):
     FIELD_BOX_WIDTH = 500
     FIELD_ROW_COUNT = 173  # highest count (Params[SpecialEffects])
 
-    class EntryRow(SoulstructBaseFieldEditor.EntryRow):
+    class EntryRow(BaseFieldDataTab.EntryRow):
         ENTRY_ID_WIDTH = 10
         master: SoulstructParamsEditor
 
-        def __init__(self, editor: SoulstructBaseFieldEditor, row_index: int, main_bindings: dict = None):
+        def __init__(self, editor: BaseFieldDataTab, row_index: int, main_bindings: dict = None):
             super().__init__(editor=editor, row_index=row_index, main_bindings=main_bindings)
             self.linked_text = ''
 

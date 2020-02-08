@@ -10,7 +10,7 @@ from typing import Dict, List, TYPE_CHECKING
 import soulstruct.game_types as gt
 from soulstruct.constants.darksouls1.maps import get_map, ALL_MAPS
 from soulstruct.maps.msb import MAP_ENTRY_ENTITY_TYPES
-from soulstruct.project.editor import SoulstructBaseEditor
+from soulstruct.project.base.core import BaseDataTab
 from soulstruct.project.utilities import bind_events
 from soulstruct.utilities import BiDict, word_wrap
 
@@ -70,7 +70,7 @@ MODULE_CLASS_NAMES = BiDict(
 )
 
 
-class SoulstructEntityEditor(SoulstructBaseEditor):
+class EntityDataTab(BaseDataTab):
     DATA_NAME = "Maps"
     TAB_NAME = "entities"
     CATEGORY_BOX_WIDTH = 165
@@ -78,9 +78,9 @@ class SoulstructEntityEditor(SoulstructBaseEditor):
     ENTRY_BOX_HEIGHT = 400
     ENTRY_RANGE_SIZE = 100  # More are added dynamically as needed.
 
-    class EntryRow(SoulstructBaseEditor.EntryRow):
+    class EntryRow(BaseDataTab.EntryRow):
         """Entry rows for Maps have no ID, and also display their Entity ID field if they have a non-default value."""
-        master: SoulstructEntityEditor
+        master: EntityDataTab
 
         ENTRY_ID_WIDTH = 15
         SHOW_ENTRY_ID = True
@@ -88,7 +88,7 @@ class SoulstructEntityEditor(SoulstructBaseEditor):
         ENTRY_TEXT_WIDTH = 30
         ENTRY_DESCRIPTION_WIDTH = 120
 
-        def __init__(self, editor: SoulstructEntityEditor, row_index: int, main_bindings: dict = None):
+        def __init__(self, editor: EntityDataTab, row_index: int, main_bindings: dict = None):
             self.master = editor
             self.STYLE_DEFAULTS = editor.STYLE_DEFAULTS
 
@@ -183,7 +183,7 @@ class SoulstructEntityEditor(SoulstructBaseEditor):
                            self.description_box, self.description_label):
                 widget['bg'] = bg_color
 
-    entry_rows: List[SoulstructEntityEditor.EntryRow]
+    entry_rows: List[EntityDataTab.EntryRow]
 
     def __init__(self, maps: DarkSoulsMaps, evs_directory, global_map_choice_func, linker, master=None, toplevel=False):
         self.Maps = maps

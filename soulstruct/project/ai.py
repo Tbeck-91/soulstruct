@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Dict, List, Optional
 
 from soulstruct.ai.core import LuaError
 from soulstruct.constants.darksouls1.maps import ALL_MAPS
-from soulstruct.project.editor import SoulstructBaseEditor
+from soulstruct.project.base.core import BaseDataTab
 from soulstruct.project.utilities import bind_events
 from soulstruct.utilities.core import camel_case_to_spaces
 
@@ -144,7 +144,7 @@ class AIScriptTextEditor(tk.Text):
                 start_index = next_function_index
 
 
-class SoulstructAIEditor(SoulstructBaseEditor):
+class AIDataTab(BaseDataTab):
     DATA_NAME = "AI"
     TAB_NAME = "ai"
     CATEGORY_BOX_WIDTH = 0
@@ -154,7 +154,7 @@ class SoulstructAIEditor(SoulstructBaseEditor):
 
     _LUA_COMPILE_ERROR_RE = re.compile(r".*\\temp:(\d+): (.*)", flags=re.DOTALL)
 
-    class EntryRow(SoulstructBaseEditor.EntryRow):
+    class EntryRow(BaseDataTab.EntryRow):
         """Container/manager for widgets of a single entry row in the Editor."""
         ENTRY_ANCHOR = 'center'
         ENTRY_ROW_HEIGHT = 30
@@ -166,7 +166,7 @@ class SoulstructAIEditor(SoulstructBaseEditor):
         ENTRY_TEXT_WIDTH = 40
         ENTRY_TEXT_FG = '#FFF'
 
-        def __init__(self, editor: SoulstructAIEditor, row_index: int, main_bindings: dict = None):
+        def __init__(self, editor: AIDataTab, row_index: int, main_bindings: dict = None):
             self.master = editor
             self.STYLE_DEFAULTS = editor.STYLE_DEFAULTS
 
@@ -280,7 +280,7 @@ class SoulstructAIEditor(SoulstructBaseEditor):
                     raise ValueError(f"Invalid goal type: {goal_type}")
                 self._goal_type = goal_type
 
-    entry_rows: List[SoulstructAIEditor.EntryRow]
+    entry_rows: List[AIDataTab.EntryRow]
 
     def __init__(self, ai: DarkSoulsAIScripts, script_directory, game_root, allow_decompile, global_map_choice_func,
                  linker, master=None, toplevel=False):

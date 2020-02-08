@@ -9,8 +9,8 @@ from soulstruct.constants.darksouls1.maps import ALL_MAPS
 from soulstruct.core import InvalidFieldValueError
 from soulstruct.maps import MAP_ENTRY_TYPES
 from soulstruct.models.darksouls1 import CHARACTER_MODELS
-from soulstruct.project.utilities import bind_events
-from soulstruct.project.editor import SoulstructBaseFieldEditor, NameSelectionBox
+from soulstruct.project.utilities import bind_events, NameSelectionBox
+from soulstruct.project.base.core import BaseFieldDataTab
 from soulstruct.utilities import camel_case_to_spaces, Vector
 
 if TYPE_CHECKING:
@@ -34,7 +34,7 @@ ENTRY_LIST_FG_COLORS = {
 }
 
 
-class SoulstructMapEditor(SoulstructBaseFieldEditor):
+class SoulstructMapEditor(BaseFieldDataTab):
     DATA_NAME = "Maps"
     TAB_NAME = "maps"
     CATEGORY_BOX_WIDTH = 165
@@ -48,7 +48,7 @@ class SoulstructMapEditor(SoulstructBaseFieldEditor):
     FIELD_VALUE_BOX_WIDTH = 200
     FIELD_VALUE_WIDTH = 60
 
-    class FieldRow(SoulstructBaseFieldEditor.FieldRow):
+    class FieldRow(BaseFieldDataTab.FieldRow):
 
         def __init__(self, editor: SoulstructMapEditor, row_index: int, main_bindings: dict = None):
             super().__init__(editor=editor, row_index=row_index, main_bindings=main_bindings)
@@ -271,7 +271,7 @@ class SoulstructMapEditor(SoulstructBaseFieldEditor):
                            self.value_checkbutton):
                 widget['bg'] = bg_color
 
-    class EntryRow(SoulstructBaseFieldEditor.EntryRow):
+    class EntryRow(BaseFieldDataTab.EntryRow):
         """Entry rows for Maps have no ID, and also display their Entity ID field if they have a non-default value."""
         master: SoulstructMapEditor
 

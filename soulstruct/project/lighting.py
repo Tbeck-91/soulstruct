@@ -3,12 +3,12 @@ from __future__ import annotations
 from typing import Union, TYPE_CHECKING
 
 from soulstruct.params.dark_souls_params import DRAW_PARAM_MAPS
-from soulstruct.project.editor import SoulstructBaseFieldEditor
+from soulstruct.project.base.core import BaseFieldDataTab
 if TYPE_CHECKING:
     from soulstruct.params import DarkSoulsLightingParameters, ParamEntry, DrawParamTable
 
 
-class SoulstructLightingEditor(SoulstructBaseFieldEditor):
+class SoulstructLightingEditor(BaseFieldDataTab):
     DATA_NAME = "Lighting"
     TAB_NAME = "lighting"
     CATEGORY_BOX_WIDTH = 165
@@ -18,10 +18,10 @@ class SoulstructLightingEditor(SoulstructBaseFieldEditor):
     FIELD_BOX_HEIGHT = 400
     FIELD_ROW_COUNT = 45  # highest count (AmbientLight)
 
-    class EntryRow(SoulstructBaseFieldEditor.EntryRow):
+    class EntryRow(BaseFieldDataTab.EntryRow):
         ENTRY_ID_WIDTH = 10
 
-        def __init__(self, editor: SoulstructBaseFieldEditor, row_index: int, main_bindings: dict = None):
+        def __init__(self, editor: BaseFieldDataTab, row_index: int, main_bindings: dict = None):
             super().__init__(editor=editor, row_index=row_index, main_bindings=main_bindings)
             self.linked_text = ''
 

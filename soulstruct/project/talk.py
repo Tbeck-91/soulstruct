@@ -13,11 +13,11 @@ from soulstruct.esd.dark_souls_talk import TalkESDBND
 from soulstruct.esd.ds1ptde import ESD as ESD_PTDE
 from soulstruct.esd.ds1r import ESD as ESD_DSR
 from soulstruct.esd.errors import EsdError
-from soulstruct.project.editor import SoulstructBaseEditor
+from soulstruct.project.base.core import BaseDataTab
 from soulstruct.project.utilities import bind_events
 
 
-__all__ = ["SoulstructTalkEditor"]
+__all__ = ["TalkDataTab"]
 _LOGGER = logging.getLogger(__name__)
 _TALK_ESP_MATCH = re.compile(r"^t(\d+)\.esp\.py$")
 
@@ -106,7 +106,7 @@ class ESPTextEditor(tk.Text):
                                        start_offset=tag_data.offsets[0], end_offset=tag_data.offsets[1])
 
 
-class SoulstructTalkEditor(SoulstructBaseEditor):
+class TalkDataTab(BaseDataTab):
     DATA_NAME = "Talk"
     TAB_NAME = "talk"
     CATEGORY_BOX_WIDTH = 0
@@ -114,7 +114,7 @@ class SoulstructTalkEditor(SoulstructBaseEditor):
     ENTRY_BOX_HEIGHT = 400
     ENTRY_RANGE_SIZE = 200
 
-    class EntryRow(SoulstructBaseEditor.EntryRow):
+    class EntryRow(BaseDataTab.EntryRow):
         """Container/manager for widgets of a single entry row in the Editor."""
         ENTRY_ANCHOR = 'center'
         ENTRY_ROW_HEIGHT = 30
@@ -122,7 +122,7 @@ class SoulstructTalkEditor(SoulstructBaseEditor):
         ENTRY_ID_WIDTH = 15
         ENTRY_ID_FG = '#CDF'
 
-        def __init__(self, editor: SoulstructTalkEditor, row_index: int, main_bindings: dict = None):
+        def __init__(self, editor: TalkDataTab, row_index: int, main_bindings: dict = None):
             self.master = editor
             self.STYLE_DEFAULTS = editor.STYLE_DEFAULTS
 
@@ -183,7 +183,7 @@ class SoulstructTalkEditor(SoulstructBaseEditor):
             for widget in (self.row_box, self.id_box, self.id_label):
                 widget['bg'] = bg_color
 
-    entry_rows: List[SoulstructTalkEditor.EntryRow]
+    entry_rows: List[TalkDataTab.EntryRow]
 
     def __init__(self, esp_directory, game_root, game_name: str, global_map_choice_func,
                  linker=None, master=None, toplevel=False):

@@ -6,7 +6,7 @@ from soulstruct.maps import MAP_ENTRY_TYPES
 
 if TYPE_CHECKING:
     from soulstruct.project import SoulstructProjectWindow
-    from soulstruct.project.editor import SoulstructBaseFieldEditor
+    from soulstruct.project.base.core import BaseFieldDataTab
     from soulstruct.maps import MSB
 
 
@@ -22,7 +22,7 @@ class WindowLinker(object):
         return self.window.TAB_ORDER.index(tab_name.lower())
 
     def jump(self, tab_name, category, entry_id, field_name=None, choice_func=None):
-        data_tab = getattr(self.window, f"{tab_name}_tab")  # type: SoulstructBaseFieldEditor
+        data_tab = getattr(self.window, f"{tab_name}_tab")  # type: BaseFieldDataTab
         self.window.page_tabs.select(self.get_tab_index(tab_name))
         try:
             if choice_func is not None:
